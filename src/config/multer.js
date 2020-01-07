@@ -1,8 +1,9 @@
 const multer = require('multer');
 const path = require('path');
 const crypto = require('crypto');
+// const aar = require('../../temp/uploads');
 
-const path_fo_file = path.resolve(__dirname, '..', '..', 'tmp', 'uploads');
+const path_fo_file = path.resolve('..', '..', 'tmp', 'uploads');
 
 module.exports = {
   dest: path.resolve(path_fo_file),
