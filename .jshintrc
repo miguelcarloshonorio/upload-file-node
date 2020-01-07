@@ -1,0 +1,8 @@
+{
+  "esversion": 9,
+  "unused":true,
+  "quotmark": "single",
+  "globals": {
+    "use": true
+  }
+}
