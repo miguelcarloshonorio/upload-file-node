@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const app = express();
 const router = require('./routes');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 //**
 // database setup
