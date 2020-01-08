@@ -2,8 +2,6 @@ const routes = require('express').Router();
 const multer = require('multer');
 const multerConfig = require('./config/multer');
 const Post = require('./models/Post');
-//custom cloudinary
-const cloudinary = require('./config/cloudinary');
 
 routes.get('/', (req, res) => {
   return res.json({
@@ -43,21 +41,9 @@ routes.delete('/posts/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
-    if (post.secure_url) {
-      await cloudinary.uploader.destroy(post.key, async (error, result) => {
-        if (error) {
-          res.status(200).json({
-            result
-          });
-        } else {
-          res.status(500).json({
-            error
-          });
-        }
-      });
-    } else {
-      // remover em dev
-    }
+    post.remove();
+
+    res.status(200).json({ status: 'ok'});
 
   } catch (error) {
     res.status(500).json({
