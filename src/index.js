@@ -26,6 +26,7 @@ initServer = () => {
   // por enquanto dev, depois melhora
   app.use(morgan('combined'));
   app.use(router);
+  app.use('cors');
   app.use(express.urlencoded({
     extended: true
   }));
