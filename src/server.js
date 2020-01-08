@@ -5,6 +5,7 @@ const app = express();
 const router = require('./routes');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 //**
 // database setup
@@ -26,13 +27,14 @@ mongoose.connect(process.env.MONGODB_URI, {
 initServer = () => {
   // por enquanto dev, depois melhora
   midlewares();
+  statics();
   app.use(express.urlencoded({
     extended: true
   }));
 
   const port = process.env.PORT || 3000;
   app.listen(port, (error) => {
-    if(error){
+    if (error) {
       console.log(`Error on up server: ${error}`);
     }
     console.log(`Server Up on port ${port}`);
@@ -42,5 +44,10 @@ initServer = () => {
 midlewares = () => {
   app.use(morgan('combined'));
   app.use(router);
-  // app.use(cors());
-}
+  app.use(cors());
+};
+
+statics = () => {
+  // arquivos estáticos do projeto
+  app.use('/files', express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')));
+};

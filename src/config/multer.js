@@ -2,14 +2,8 @@ require('dotenv').config();
 const multer = require('multer');
 const path = require('path');
 const crypto = require('crypto');
-const cloudinary = require('cloudinary');
+const cloudinary = require('./cloudinary');
 const cloudinaryStorage = require('multer-storage-cloudinary');
-
-cloudinary.config({
-  api_key: process.env.api_key,
-  api_secret: process.env.api_secret,
-  cloud_name: process.env.cloud_name
-});
 
 const storageTypes = {
   local: multer.diskStorage({
@@ -25,7 +19,7 @@ const storageTypes = {
         file.url = '';
         file.secure_url = '';
 
-        callback(null, file.originalname);
+        callback(null, file.public_id);
 
       });
     }
@@ -46,7 +40,7 @@ const path_fo_file = path.resolve(__dirname, '..', '..', 'tmp', 'uploads');
 
 module.exports = {
   dest: path.resolve(path_fo_file),
-  storage: uploadEnvirontment(),
+  storage: process.env.NODE_ENV === 'production' ? storageTypes.cloud : storageTypes.local,
   // storage: storageTypes.cloud,
   limits: {
     fileSize: 2 * 1024 * 1024,
@@ -66,7 +60,3 @@ module.exports = {
     }
   }
 };
-
-function uploadEnvirontment() {
-  return process.env.NODE_ENV === 'production' ? storageTypes.cloud : storageTypes.local;
-}
