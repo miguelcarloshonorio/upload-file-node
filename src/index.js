@@ -31,7 +31,10 @@ initServer = () => {
   }));
 
   const port = process.env.PORT | 3000;
-  app.listen(port, () => {
+  app.listen(port, (error) => {
+    if(error){
+      console.log(`Error on up server: ${error}`);
+    }
     console.log(`Server Up on port ${port}`);
   });
 };
