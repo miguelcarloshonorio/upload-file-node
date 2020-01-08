@@ -25,9 +25,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 initServer = () => {
   // por enquanto dev, depois melhora
-  app.use(morgan('combined'));
-  app.use(router);
-  app.use(cors());
+  midlewares();
   app.use(express.urlencoded({
     extended: true
   }));
@@ -37,3 +35,9 @@ initServer = () => {
     console.log(`Server Up on port ${port}`);
   });
 };
+
+midlewares = () => {
+  app.use(morgan('combined'));
+  app.use(router);
+  // app.use(cors());
+}
